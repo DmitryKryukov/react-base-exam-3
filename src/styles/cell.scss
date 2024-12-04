@@ -1,0 +1,14 @@
+.cell {
+    opacity: 0.5;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.battle--end {
+    .cell{
+        transition: opacity var(--ease-out-quint) 1s;
+        opacity: 0 !important;
+    }
+}

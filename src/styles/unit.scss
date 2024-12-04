@@ -1,0 +1,313 @@
+.unit-container {
+    position: relative;
+}
+
+.unit {
+    pointer-events: none;
+}
+
+.unit .sprite {
+    pointer-events: none;
+    z-index: 1;
+}
+
+.unit--large {
+    width: 390px;
+    height: 390px;
+}
+
+.unit--medium {
+    width: 300px;
+    height: 300px;
+}
+
+.unit--small {
+    width: 240px;
+    height: 240px;
+}
+
+.unit--active {
+    .sprite {
+        animation: unit-flash .3s var(--ease-out-quint) forwards;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-image: radial-gradient(gold 5px, transparent 5px, hsla(51, 100%, 50%, 0.75) calc(100% - 25px), gold calc(100% - 25px), gold calc(100% - 25px), transparent calc(100% - 24px));
+
+        transform: scale(1.5, .75);
+        transform-origin: bottom;
+    }
+}
+
+.unit--active.unit--enemy {
+    &::after {
+        background-image: radial-gradient(red 5px, transparent 5px, hsla(0, 100%, 50%, 0.75) calc(100% - 25px), calc(100% - 25px), red calc(100% - 25px), transparent calc(100% - 24px));
+    }
+}
+
+
+
+@keyframes unit-flash {
+    0% {
+        filter: brightness(2) drop-shadow(0px 2px 0px var(--active-color)) drop-shadow(0px -2px 0px var(--active-color)) drop-shadow(2px 0px 0px var(--active-color)) drop-shadow(-2px 0px 0px var(--active-color));
+    }
+
+    75% {
+        filter: brightness(2) drop-shadow(0px 2px 0px var(--active-color)) drop-shadow(0px -2px 0px var(--active-color)) drop-shadow(2px 0px 0px var(--active-color)) drop-shadow(-2px 0px 0px var(--active-color));
+    }
+
+    100% {
+        filter: brightness(1) drop-shadow(0px 2px 0px var(--active-color)) drop-shadow(0px -2px 0px var(--active-color)) drop-shadow(2px 0px 0px var(--active-color)) drop-shadow(-2px 0px 0px var(--active-color));
+    }
+}
+
+.unit--defence-up {
+    .sprite {
+        animation: unit-defence .3s var(--ease-out-quint) forwards;
+        transform-origin: center calc(100% - var(--sprite-y) * 4);
+    }
+}
+
+@keyframes unit-defence {
+    0% {
+        filter: brightness(1);
+        scale: 1;
+    }
+
+    75% {
+        filter: brightness(2);
+        scale: 1 1.2;
+    }
+
+    100% {
+        filter: brightness(1);
+        scale: 1;
+    }
+}
+
+
+body:not(.not-blend-modes) {
+    .unit--active {
+        &::after {
+            mix-blend-mode: plus-lighter;
+            background-color: black;
+            background-image: radial-gradient(gold 5px, transparent 5px, hsla(51, 100%, 50%, 0.75) calc(100% - 25px), gold calc(100% - 25px), gold calc(100% - 25px), black calc(100% - 24px));
+        }
+    }
+
+    .unit--active.unit--enemy {
+        &::after {
+            background-image: radial-gradient(red 5px, transparent 5px, hsla(0, 100%, 50%, 0.75) calc(100% - 25px), calc(100% - 25px), red calc(100% - 25px), transparent calc(100% - 24px));
+        }
+    }
+}
+
+body:not(.not-pixelization) {
+    .unit--active {
+        &::after {
+            filter: url(#pixelate);
+        }
+    }
+}
+
+.unit--active .sprite {
+    translate: (var(--sprite-x, 0) var(--sprite-y, 0));
+    filter: drop-shadow(0px 2px 0px var(--active-color)) drop-shadow(0px -2px 0px var(--active-color)) drop-shadow(2px 0px 0px var(--active-color)) drop-shadow(-2px 0px 0px var(--active-color));
+}
+
+.transform {
+    transition: left linear var(--run-speed), top linear var(--run-speed);
+}
+
+.sprite {
+    position: absolute;
+    translate: (var(--sprite-x, 0) var(--sprite-y, 0));
+}
+
+.shadow {
+    position: absolute;
+    left: var(--shadow-x, 18%);
+    right: 20px;
+    bottom: var(--shadow-y, -16%);
+    pointer-events: none;
+}
+
+body:not(.not-blend-modes) {
+    .shadow {
+        background-color: white;
+        mix-blend-mode: multiply;
+    }
+
+}
+
+body:not(.not-pixelization) {
+    .shadow {
+        filter: url(#pixelate-shadow);
+    }
+
+}
+
+.shadow__inner {
+    width: 100%;
+    height: 100%;
+    opacity: .7;
+    translate: var(--translate-shadow-x) var(--translate-shadow-y);
+    filter: brightness(0);
+}
+
+.unit-ui-wrapper {
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    bottom: 0;
+}
+
+.unit--active {
+    .unit-ui-wrapper__name {
+        opacity: 1;
+        translate: 0 0;
+        filter: brightness(1);
+    }
+
+    .unit-ui-wrapper-hp-wrapper {
+        border-radius: 4px 4px 0 0;
+    }
+}
+
+.battle-ui-unit__name {
+    font-size: 14px;
+}
+
+.unit-ui-status-wrapper {
+    position: relative;
+    gap: 4px;
+    width: min-content;
+    font-size: 16px;
+    padding: 2px 3px;
+    background: #000;
+    border-radius: 4px;
+}
+
+.unit-ui-hp-wrapper {
+    gap: 4px;
+}
+
+.unit-ui-defence-wrapper {
+    gap: 3px;
+}
+
+.unit-ui-defence-wrapper {
+    color: #858585;
+}
+
+.unit-ui-wrapper__name {
+    width: max-content;
+    color: #000;
+    background-color: gold;
+    font-size: 12px;
+    padding: 2px 3px;
+    border-radius: 0px 4px 4px 4px;
+    opacity: 0;
+    translate: 0 20px;
+    filter: brightness(0);
+    transition: all var(--ease-out-back) .5s .3s;
+}
+.unit-ui-taken-damage {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: white;
+    background: red;
+    font-weight: 500;
+    padding: 2px 4px;
+    translate: 100%;
+    border-radius: 4px;
+    opacity: 0;
+}
+.unit--damaging {
+    .unit-ui-taken-damage {
+        animation: show-damage 1s var(--ease-out-quint) 1 forwards;
+        transform-origin: left;
+    }
+}
+@keyframes show-damage {
+    0% {
+        opacity: 1;
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        translate: 0 100px;
+        scale: 2;
+        opacity: 0;
+    }
+}
+
+.unit--enemy .unit-ui-wrapper__name {
+    background-color: red;
+}
+
+.unit--hovered {
+    .sprite {
+        filter: drop-shadow(0px 0px 20px #ff000020) drop-shadow(2px 2px 0 red) drop-shadow(2px -2px 0 red) drop-shadow(-2px -2px 0 red) drop-shadow(-2px 2px 0 red) !important;
+    }
+}
+
+.unit--damaging .sprite {
+    transform-origin: bottom;
+    animation: take-damage .3s var(--ease-out-quint) forwards;
+}
+
+@keyframes take-damage {
+    75% {
+        filter: sepia(1) saturate(5) hue-rotate(-50deg) contrast(1.5);
+        transform-origin: bottom;
+        rotate: 15deg;
+        scale: 0.8;
+    }
+}
+
+.unit--damaging {
+    .unit-ui-status-wrapper {
+        animation: shake .5s var(--ease-out-quint) 1 forwards;
+    }
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-2deg); }
+    20% { transform: translate(-3px, 0px) rotate(2deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-2deg); }
+    80% { transform: translate(-1px, -1px) rotate(-2px); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+
+  .unit--died {
+    .sprite, .shadow{
+    opacity: 0;
+    transition: opacity var(--ease-out-quint) 2s 3s;
+    }
+    .unit-ui-wrapper {
+        transition: opacity var(--ease-out-quint) .5s;
+        opacity: 0;
+    }
+  }
+
+  .battle--end {
+    .unit-ui-wrapper {
+        opacity: 0;
+        transition: opacity var(--ease-out-quint) 1s;
+    }
+  }

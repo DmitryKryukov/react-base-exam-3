@@ -1,0 +1,29 @@
+
+
+.background {
+    position: absolute;
+    width: 100lvw;
+    height: 100lvh;
+    z-index: -1;
+}
+
+.background--mid {
+    width: 100lvw;
+    height: 100lvh;
+    object-fit: cover;
+    object-position: top left;
+    scale: 1.5;
+    translate: 0 -125px;
+}
+
+.background--back {
+    width: 100lvw;
+    object-position: top left;
+    object-fit: cover;
+}
+
+.main-menu-background__image {
+    object-fit: cover;
+    width: 100lvw;
+    height: 100lvh;
+}

@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+    outline: none;
+    image-rendering: pixelated;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+html {
+    transition: background-color var(--ease-out-quint) .3s;
+}
+html:has(.modal-wrapper--open) {
+    background-color: var(--modal-overlay);
+}
+html,
+body {
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    html,
+    body {
+        color-scheme: dark;
+    }
+}
+
+body, main {
+    display: flex;
+    flex-direction: column;
+    min-height: 100lvh;
+    font-size: 24px;
+    line-height: 1;
+    overflow: hidden;
+    user-select: none;
+}

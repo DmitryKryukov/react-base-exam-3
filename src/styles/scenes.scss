@@ -1,0 +1,17 @@
+.scene--to-next {
+    filter: brightness(0);
+    pointer-events: none;
+    transition: none !important;
+}
+
+.scene--fade-in {
+    transition: filter var(--ease-out-quint) 3s;
+    scale: 1.1;
+    animation: 3s var(--ease-out-quint) scene--fade-in forwards;
+}
+
+@keyframes scene--fade-in {
+    to {
+        scale: 1;
+    }
+}

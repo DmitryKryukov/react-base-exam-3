@@ -1,0 +1,15 @@
+.hide {
+    display: none !important;
+}
+
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.freeze {
+    pointer-events: none !important;
+}
